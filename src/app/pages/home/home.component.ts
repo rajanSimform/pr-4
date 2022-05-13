@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { DepartmentService } from 'src/app/app-service/department.service';
@@ -17,6 +18,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   allUsers: User[];
   usersByDept: Partial<User[]>;
   usersByDeptLength: number;
+  deptFilter = new FormControl();
+  filterInput: string[] = ['All'];
+  filteredDept: Department[];
   allSubscriptions: Subscription[] = [];
 
   constructor(
@@ -38,6 +42,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     );
     // push all subscription to array
     this.allSubscriptions.push(deptSubscription, userSubscription);
+    this.deptFilter.setValue(this.filterInput);
   }
 
   step: number;
@@ -56,6 +61,40 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   openAddUserDialog() {
     const dialogRef = this.dialog.open(AddUserFormComponent);
+  }
+
+  filterSelected() {
+    const list = this.deptFilter.value;
+    console.log('before', list);
+
+    if (list.length === 0 || list.length === this.allDepts.length) {
+      this.deptFilter.setValue(['All']);
+      console.log('1st If', list);
+    }
+
+    if (list[0] === 'All') {
+      this.deptFilter.setValue(['All']);
+      console.log('2nd If', list);
+    }
+
+    if (list[0] === 'All' && list.length == 2) {
+      list.shift();
+      this.deptFilter.setValue(list);
+      console.log('3rd If', list);
+    }
+
+    // if (this.deptFilter.value[0] === 'All' && this.deptFilter.touched) {
+    //   this.deptFilter.setValue(['All']);
+    // } else {
+    //   // if other is selected then remove "ALL"
+    //   if (this.deptFilter.value[0] === 'All') {
+    //     this.deptFilter.value.shift();
+    //     this.deptFilter.setValue(this.deptFilter.value);
+    //   }
+    // }
+    // // when option selected other than "ALL"
+
+    console.log('after', list);
   }
 
   ngOnDestroy(): void {
