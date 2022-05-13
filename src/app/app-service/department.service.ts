@@ -33,23 +33,15 @@ export class DepartmentService {
   }
 
   addDeptartment(name: string) {
-    this.departments.push(new Department(name));
+    this.departments.push(new Department(name, 0));
   }
 
   addUser(name: string, deptName: string) {
     this.users.push(new User(name, deptName));
+    this.departments.find((x) => x.deptName === deptName).userCount += 1;
   }
 
   getCount(deptName: string) {
     return this.users.filter((user) => user.deptName === deptName).length;
   }
-  // groupByUsers(users:User[], depts:Department[]){
-  //   let obj:any
-  //   for(let user of users){
-  //     let arr = []
-  //     if(depts.map(x=>x.deptName).includes(user.deptName)){
-  //       obj[user.deptName]
-  //     }
-  //   }
-  // }
 }

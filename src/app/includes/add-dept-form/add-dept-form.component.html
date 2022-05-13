@@ -1,0 +1,16 @@
+<h2 mat-dialog-title>Add Department</h2>
+<mat-dialog-content>
+    <form [formGroup]="form" #addDeptForm (ngSubmit)="saveDetails(form)">
+        <mat-form-field appearance="standard">
+            <mat-label>Department Name</mat-label>
+            <input matInput maxlength="15" inputmode="tel" placeholder="New Department Name" formControlName="deptName" #nameInput>
+            <mat-hint>Enter Department Name</mat-hint>
+            <mat-error>Name is required</mat-error>
+        </mat-form-field>
+
+        <mat-dialog-actions align="end">
+          <button mat-button mat-dialog-close>Cancel</button>
+          <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid" [mat-dialog-close]="true">Submit</button>
+        </mat-dialog-actions>
+    </form>
+</mat-dialog-content>

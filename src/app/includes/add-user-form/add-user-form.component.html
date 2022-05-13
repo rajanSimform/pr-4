@@ -1,0 +1,36 @@
+<h2 mat-dialog-title>Add User</h2>
+<mat-dialog-content>
+    <form [formGroup]="form" #addDeptForm (ngSubmit)="saveDetails(form)">
+        <mat-form-field appearance="standard">
+            <mat-label>Name</mat-label>
+            <input matInput placeholder="Enter Name" formControlName="name" #nameInput>
+            <mat-hint>Enter User Name</mat-hint>
+            <mat-error>Name is required</mat-error>
+        </mat-form-field>
+        <br>
+        <!-- <mat-form-field>
+          <mat-label>Department Name</mat-label>
+          <mat-select>
+            <mat-option value="option">Option</mat-option>
+          </mat-select>
+          <mat-error>Please select department name</mat-error>
+          <mat-hint>Select Department of User</mat-hint>
+        </mat-form-field> -->
+        <mat-form-field>
+          <mat-label>Department Name</mat-label>
+          <mat-select formControlName="deptName">
+            <mat-option>--</mat-option>
+            <mat-option *ngFor="let dept of allDept" [value]="dept.deptName">
+              {{dept.deptName}}
+            </mat-option>
+          </mat-select>
+          <mat-error>Please choose an department</mat-error>
+          <mat-hint>Select Department of User</mat-hint>
+        </mat-form-field>
+
+        <mat-dialog-actions align="end">
+          <button mat-button mat-dialog-close>Cancel</button>
+          <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid" [mat-dialog-close]="true">Submit</button>
+        </mat-dialog-actions>
+    </form>
+</mat-dialog-content>
